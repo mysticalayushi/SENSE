@@ -1,0 +1,32 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Data folders
+data/raw/
+data/processed/
+
+# Output folders
+outputs/charts/
+outputs/reports/
+
+# Model cache files
+models/__pycache__/
+*.cpython-*.pyc
+
+# Environment
+.env
+.venv/
+venv/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Test/sample files
+sample_reviews*.csv
