@@ -42,7 +42,7 @@ It combines a fast, interpretable rule-based model (**VADER**) with a context-aw
   <li><a href="#-model-training--performance">🤖 Model Training & Performance</a></li>
   <li><a href="#-model-validation-visuals">📈 Model Validation Visuals</a></li>
   <li><a href="#-application-features">🚀 Application Features</a></li>
-  <li><a href="#-business-impact">📈 Business Applications</a></li>
+  <li><a href="#-business-impact">📈 Business Impact</a></li>
   <li><a href="#️-run-locally">▶️ Run Locally</a></li>
   <li><a href="#-future-scope">🔭 Future Scope</a></li>
   <li><a href="#-author">👩‍💻 Author</a></li>
@@ -204,7 +204,7 @@ The deployed Streamlit dashboard includes:
 
 ---
 
-## 💼 BUSINESS IMPACT
+## 💼 Business Impact 
 
 SENSE transforms unstructured customer feedback into actionable business intelligence — enabling organizations to understand customer sentiment at scale and make data-driven decisions.
 
