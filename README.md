@@ -41,9 +41,8 @@ It combines a fast, interpretable rule-based model (**VADER**) with a context-aw
   <li><a href="#-validation-dataset">📊 Validation Dataset</a></li>
   <li><a href="#-model-training--performance">🤖 Model Training & Performance</a></li>
   <li><a href="#-model-validation-visuals">📈 Model Validation Visuals</a></li>
-  <li><a href="#-sense-engine">🔮 The SENSE Engine</a></li>
   <li><a href="#-application-features">🚀 Application Features</a></li>
-  <li><a href="#-Business-Impact">🎯 Use Cases</a></li>
+  <li><a href="#-business-impact">📈 Business Applications</a></li>
   <li><a href="#️-run-locally">▶️ Run Locally</a></li>
   <li><a href="#-future-scope">🔭 Future Scope</a></li>
   <li><a href="#-author">👩‍💻 Author</a></li>
@@ -55,7 +54,7 @@ It combines a fast, interpretable rule-based model (**VADER**) with a context-aw
 
 <div align="center">
 
-[![Streamlit App](https://img.shields.io/badge/Streamlit-Live%20App-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](#)
+[![Streamlit App](https://img.shields.io/badge/Streamlit-Live%20App-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://kzwbzkfnogri2rp7tomcn5.streamlit.app/)
 [![Notebook](https://img.shields.io/badge/Notebook-View%20Analysis-F37626?style=for-the-badge&logo=jupyter&logoColor=white)](notebooks/sense.ipynb)
 
 
