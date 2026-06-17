@@ -4,7 +4,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Transformers](https://img.shields.io/badge/Transformers-RoBERTa-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)
-![Hugging Face](https://img.shields.io/badge/Hugging%20Face-Deployed-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)
+![Streamlit](https://img.shields.io/badge/Streamlit-Deployed-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
 ![SHAP](https://img.shields.io/badge/SHAP-Explainability-8A2BE2?style=for-the-badge)
 ![Accuracy](https://img.shields.io/badge/Accuracy-85%25-22C55E?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Completed-22C55E?style=for-the-badge)
@@ -43,7 +43,7 @@ It combines a fast, interpretable rule-based model (**VADER**) with a context-aw
   <li><a href="#-model-validation-visuals">📈 Model Validation Visuals</a></li>
   <li><a href="#-sense-engine">🔮 The SENSE Engine</a></li>
   <li><a href="#-application-features">🚀 Application Features</a></li>
-  <li><a href="#-use-cases">🎯 Use Cases</a></li>
+  <li><a href="#-Business-Impact">🎯 Use Cases</a></li>
   <li><a href="#️-run-locally">▶️ Run Locally</a></li>
   <li><a href="#-future-scope">🔭 Future Scope</a></li>
   <li><a href="#-author">👩‍💻 Author</a></li>
@@ -55,11 +55,11 @@ It combines a fast, interpretable rule-based model (**VADER**) with a context-aw
 
 <div align="center">
 
-[![Hugging Face](https://img.shields.io/badge/Hugging%20Face-Live%20Space-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)](#)
+[![Streamlit App](https://img.shields.io/badge/Streamlit-Live%20App-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](#)
 [![Notebook](https://img.shields.io/badge/Notebook-View%20Analysis-F37626?style=for-the-badge&logo=jupyter&logoColor=white)](notebooks/sense.ipynb)
 
 
-> ⚠️ **App may be sleeping** — Hugging Face free tiers may hibernate. Click a **Live App** link and wait ~30s for it to spin up.
+> ⚠️ **App may be sleeping** — Streamlit free tier may hibernate. Click **Live App** and wait ~30s for it to spin up.
 
 </div>
 
@@ -103,11 +103,11 @@ SENSE/
 | 🏷️ Category | 🔧 Tools |
 |---|---|
 | 🐍 **Language** | Python 3.11 |
-| 🤖 **Models** | VADER (NLTK), RoBERTa (`cardiffnlp/twitter-roberta-base-sentiment`) |
-| 🧠 **NLP / ML** | Hugging Face Transformers, SHAP, Scikit-learn, SciPy |
+| 🤖 **Models** | RoBERTa (`cardiffnlp/twitter-roberta-base-sentiment`) |
+| 🧠 **NLP / ML** | Hugging Face Transformers, SHAP, SciPy |
 | 📊 **Data** | Pandas, NumPy |
-| 📈 **Visualization** | Plotly, Matplotlib, Seaborn |
-| 🚀 **Deployment** | Streamlit Cloud, Hugging Face Spaces |
+| 📈 **Visualization** | Plotly |
+| 🚀 **Deployment** | Streamlit Cloud |
 | 📄 **Reporting** | fpdf2 (PDF export) |
 
 </div>
@@ -121,14 +121,6 @@ The model was benchmarked using the **Amazon Fine Food Reviews dataset from Kagg
 - **Total Records:** ~568,000 reviews (full dataset)
 - **Sample Used:** 5,000 reviews — large enough to observe meaningful patterns, small enough to iterate fast
 - **Key Columns:** `Id`, `Score` (1–5 star rating, used as ground truth), `Text` (raw review), `Summary` (review title)
-
-**Sentiment label mapping:**
-
-| Star Rating | Label |
-|---|---|
-| 1–2 ⭐ | Negative |
-| 3 ⭐ | Neutral |
-| 4–5 ⭐ | Positive |
 
 **Resulting class distribution (5,000-review sample):**
 
@@ -159,6 +151,9 @@ Two models were trained and benchmarked against the star-rating ground truth:
 **Why RoBERTa wins:** VADER is a fast, lexicon-based scorer with no training required — great as a baseline, but it struggles with negation, sarcasm, and ambiguous/neutral language. RoBERTa, fine-tuned on ~58M tweets for 3-class sentiment, understands full-sentence context — giving it a decisive edge on the hardest classes (**Negative** and **Neutral**), which is exactly where business value lies in catching dissatisfied customers.
 
 > ⚠️ Reviews exceeding RoBERTa's 512-token limit (44 reviews, 0.88% of the sample) were caught and skipped via a `try/except RuntimeError` guard during inference.
+
+**Pipeline:** Tokenize → Forward Pass → Softmax → Score Dictionary, with raw logits normalised via `scipy.special.softmax` into interpretable probabilities summing to 1.0.
+
 
 ---
 
@@ -193,27 +188,6 @@ Two models were trained and benchmarked against the star-rating ground truth:
 
 ---
 
-## 🔮 The SENSE Engine
-
-The validated RoBERTa pipeline was packaged into two reusable functions:
-
-```python
-SENSE(text)
-# → {
-#     "Sentiment": "Positive",
-#     "Confidence (%)": 99.05,
-#     "Sentiment Score": 0.989,
-#     "Probabilities": {"Positive": 99.05, "Neutral": 0.78, "Negative": 0.17}
-#   }
-
-SENSE_BATCH(texts)
-# → returns a DataFrame with Sentiment + Confidence for every input text
-```
-
-**Pipeline:** Tokenize → Forward Pass → Softmax → Score Dictionary, with raw logits normalised via `scipy.special.softmax` into interpretable probabilities summing to 1.0.
-
----
-
 ## 🚀 Application Features
 
 The deployed Streamlit dashboard includes:
@@ -222,6 +196,7 @@ The deployed Streamlit dashboard includes:
 - 📊 **Sentiment Strength & Confidence Meters** — visual progress bars for at-a-glance interpretation
 - 📈 **Probability Distribution Chart** — Plotly bar chart breaking down Positive / Neutral / Negative probabilities
 - 🔬 **Word-Level SHAP Highlighting** — colour-coded tokens showing exactly which words drove the model's prediction, with hoverable contribution scores
+- 🎯 **Overall Sentiment Score** — a single normalised score ranging from -1 (fully negative) to +1 (fully positive), giving an at-a-glance polarity reading beyond just the label
 - 📂 **Batch CSV Analysis** — upload any CSV, pick the text column, and score every row at once
 - 📊 **Aggregate Batch Stats** — % Positive/Neutral/Negative, average confidence, and a sentiment distribution donut chart
 - 🗂️ **Filterable Results Table** with colour-coded sentiment labels and CSV export
@@ -230,15 +205,27 @@ The deployed Streamlit dashboard includes:
 
 ---
 
-## 🎯 Use Cases
+## 💼 BUSINESS IMPACT
 
-SENSE works on **any text**, not just product reviews:
+SENSE transforms unstructured customer feedback into actionable business intelligence — enabling organizations to understand customer sentiment at scale and make data-driven decisions.
 
-- 🛒 Product & e-commerce reviews
-- 📱 App store feedback
-- 💬 Social media comments
-- 🎫 Customer support tickets
-- 📋 Survey responses
+### 🛒 Customer Experience Monitoring
+Analyze thousands of reviews, survey responses, and support interactions to identify customer satisfaction trends and emerging issues before they escalate.
+
+### 🔧 Product Feedback Analysis
+Detect recurring complaints and highly praised features — helping product teams prioritize improvements and make informed roadmap decisions.
+
+### 📣 Brand Reputation Tracking
+Monitor sentiment across social media, online reviews, and public feedback channels to assess brand perception and respond proactively.
+
+### 🎫 Customer Support Intelligence
+Identify high-frustration tickets and negative feedback early, enabling support teams to triage and prioritize critical customer issues faster.
+
+### 🔬 Market Research & Voice of Customer (VoC)
+Extract sentiment patterns from large volumes of qualitative feedback to uncover customer preferences, expectations, and pain points at scale.
+
+### 📊 Executive Reporting
+Convert raw textual feedback into measurable sentiment metrics, visual dashboards, and exportable reports that support strategic decision-making.
 
 ---
 
@@ -265,11 +252,10 @@ jupyter notebook notebooks/sense.ipynb
 
 ## 🔭 Future Scope
 
-- [ ] 🔧 **Fine-tune RoBERTa** on domain-specific vocabulary to close the gap on Neutral and Negative classes
-- [ ] 📡 **Real-time sentiment monitoring dashboards** for streaming review feeds
-- [ ] 🌍 **Multilingual support** via `xlm-roberta` for non-English text
-- [ ] 🔬 **Aspect-Based Sentiment Analysis (ABSA)** — identify *which aspect* (price, delivery, quality, etc.) each sentiment applies to
-- [ ] 📄 **Batch PDF reports** alongside the existing single-review export
+- [ ] 🌐 REST API endpoint for programmatic access to the SENSE scoring engine
+- [ ] 📝 Review summarization — auto-generate a concise summary of key points from batch reviews
+- [ ] 📈 Trend analysis — track sentiment shifts over time across large review datasets
+- [ ] 🤖 LLM integration — use a large language model to generate executive summaries highlighting  positive themes, negative themes, and actionable business insights
 
 ---
 
@@ -280,7 +266,7 @@ jupyter notebook notebooks/sense.ipynb
 | 📌 Field | 📝 Detail |
 |---|---|
 | 👩‍💻 **Created by** | Ayushi Rai |
-| 🧠 **Models Used** | VADER (NLTK) / RoBERTa (Hugging Face Transformers) |
+| 🧠 **Models Used** | RoBERTa (Hugging Face Transformers) |
 | 🎯 **Task** | 3-Class Sentiment Classification (Positive / Neutral / Negative) |
 | 📊 **Validation Dataset** | Amazon Fine Food Reviews — 5,000-review sample (568K total) |
 | 📈 **Best Accuracy** | 85% (RoBERTa) |

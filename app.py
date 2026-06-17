@@ -155,7 +155,7 @@ def generate_single_report(text: str, result: dict) -> bytes:
 
 st.set_page_config(
     page_title="SENSE",
-    page_icon="🧠",
+    page_icon="assets/logo.png",
     layout="wide"
 )
 
