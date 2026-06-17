@@ -813,7 +813,7 @@ with tab_batch:
                         filtered_df = results_df[results_df["Sentiment"].isin(sentiment_filter)]
 
                         st.dataframe(
-                            filtered_df.style.applymap(
+                            filtered_df.style.map(
                                 lambda v: (
                                     "color: #00C853" if v == "Positive"
                                     else "color: #D50000" if v == "Negative"
